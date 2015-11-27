@@ -16,8 +16,6 @@ namespace TestGantt
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-
-            InitDrawGantt();
         }
 
         protected override void OnPaint(PaintEventArgs e) 
@@ -26,10 +24,31 @@ namespace TestGantt
             Draw();
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            if (g == null)
+                InitDrawGantt();
+
+            g = this.CreateGraphics();            
+            this.Invalidate();
+        }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
             MouseMove(new Point2d(e.X, e.Y));
+        }
+
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+        }
+
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
         }
     }
 }

@@ -33,9 +33,11 @@
             // 
             // gantt1
             // 
-            this.gantt1.Location = new System.Drawing.Point(1, 1);
+            this.gantt1.AutoSize = true;
+            this.gantt1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gantt1.Location = new System.Drawing.Point(0, 0);
             this.gantt1.Name = "gantt1";
-            this.gantt1.Size = new System.Drawing.Size(283, 258);
+            this.gantt1.Size = new System.Drawing.Size(284, 261);
             this.gantt1.TabIndex = 0;
             this.gantt1.Load += new System.EventHandler(this.gantt1_Load);
             // 
@@ -48,6 +50,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

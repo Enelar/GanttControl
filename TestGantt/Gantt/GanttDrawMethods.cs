@@ -24,7 +24,6 @@ namespace TestGantt
 
         private void InitDrawGantt()
         {
-            g = this.CreateGraphics();
             current_pen = new Pen(Color.Black);
             current_brush = new SolidBrush(Color.Blue);
 
