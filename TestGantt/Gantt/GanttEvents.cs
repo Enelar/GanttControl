@@ -7,14 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace TestGantt
 {
     public partial class Gantt
     {
-        public Gantt()
+        protected override void OnCreateControl()
         {
-            InitializeComponent();
+            base.OnCreateControl();
+
+            InitDrawGantt();
+        }
+
+        protected override void OnPaint(PaintEventArgs e) 
+        {
+            base.OnPaint(e);
+            Draw();
         }
     }
 }

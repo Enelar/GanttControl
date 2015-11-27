@@ -33,9 +33,9 @@
             // 
             // gantt1
             // 
-            this.gantt1.Location = new System.Drawing.Point(122, 85);
+            this.gantt1.Location = new System.Drawing.Point(1, 1);
             this.gantt1.Name = "gantt1";
-            this.gantt1.Size = new System.Drawing.Size(150, 150);
+            this.gantt1.Size = new System.Drawing.Size(283, 258);
             this.gantt1.TabIndex = 0;
             this.gantt1.Load += new System.EventHandler(this.gantt1_Load);
             // 
