@@ -75,11 +75,11 @@ namespace TestGantt
 
             var MicrosoftProjectRectColour = Color.FromArgb(255, 138, 187, 237);
 
+            if (hovered == row)
+                MicrosoftProjectRectColour = Color.FromArgb(255, 96, 163, 230);
+
             var brush = new SolidBrush(MicrosoftProjectRectColour);
             g.FillRectangle(brush, rect);
-
-            if (hovered == row)
-                g.DrawRectangle(current_pen, rect);
         }
 
         private void DrawArrow(int row_frow, DateTime date_time_from, int row_to, DateTime date_time_to)
@@ -88,7 +88,7 @@ namespace TestGantt
             var y2 = PosToYCoordinate(row_to) - 1;
 
             if (row_frow > row_to)
-                y2 += HBox;
+                y2 += HBox + 1;
             if (row_frow == row_to)
                 y2 = y1;
 
