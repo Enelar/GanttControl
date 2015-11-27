@@ -25,5 +25,11 @@ namespace TestGantt
             base.OnPaint(e);
             Draw();
         }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            MouseMove(new Point2d(e.X, e.Y));
+        }
     }
 }

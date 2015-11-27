@@ -57,6 +57,11 @@ namespace TestGantt
             return row_baseline + centered_offset;
         }
 
+        private int YCoordinateToPos(int y)
+        {
+            return y / HRow;
+        }
+
         private void DrawRect(int row, TimeInterval interval)
         {
             var task_draw_interval = interval;
@@ -67,9 +72,14 @@ namespace TestGantt
             var y = PosToYCoordinate(row);
 
             Rectangle rect = new Rectangle(x1, y, x2 - x1, HBox);
+
             var MicrosoftProjectRectColour = Color.FromArgb(255, 138, 187, 237);
+
             var brush = new SolidBrush(MicrosoftProjectRectColour);
             g.FillRectangle(brush, rect);
+
+            if (hovered == row)
+                g.DrawRectangle(current_pen, rect);
         }
 
         private void DrawArrow(int row_frow, DateTime date_time_from, int row_to, DateTime date_time_to)

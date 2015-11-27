@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace TestGantt
 {
-    class Point2d
+    struct Point2d
     {
         public double x, y;
+
+        public Point2d( double _x, double _y )
+        {
+            x = _x;
+            y = _y;
+        }
     }
 }

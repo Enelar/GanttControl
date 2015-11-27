@@ -67,6 +67,9 @@
     <Compile Include="Gantt\GanttEvents.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Gantt\GanttMouse.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Gantt\Utils\Point2d.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
