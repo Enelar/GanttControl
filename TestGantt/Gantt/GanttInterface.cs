@@ -47,18 +47,6 @@ namespace TestGantt
             draw_interval = new TimeInterval(begin, end);
         }
 
-        private void Draw()
-        {
-            var hours_in_window = (draw_interval.end - draw_interval.start).TotalHours;
-            if (hours_in_window < 1)
-                return;
-
-            hour_to_pixel_ratio = 1.0 * this.Width / hours_in_window;
-
-            DrawTasks();
-            DrawLinks();
-        }
-
         private void DrawTasks()
         {           
             var pos = 0;

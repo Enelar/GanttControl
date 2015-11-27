@@ -30,8 +30,9 @@ namespace TestGantt
 
             if (g == null)
                 InitDrawGantt();
+            else
+                Resize();
 
-            g = this.CreateGraphics();            
             this.Invalidate();
         }
 
@@ -41,9 +42,14 @@ namespace TestGantt
             MouseMove(new Point2d(e.X, e.Y));
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override void OnMouseDown(MouseEventArgs e)
         {
-            base.OnMouseClick(e);
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
         }
 
         protected override void OnMouseDoubleClick(MouseEventArgs e)

@@ -15,40 +15,54 @@ namespace TestGantt
         RESIZE_ZONE,
     };
 
-    public partial class Gantt
+    class mouse_state
     {
-        int hovered = -1;
-        active_zone point_mode = active_zone.NONE;
+        public active_zone point_mode = active_zone.NONE;
+        public int hovered = -1;
+        public Point2d coords;
 
-        private void MouseMove(Point2d m)
+        public mouse_state(Point2d m)
         {
-            var hover = RayTrace(m);
+            coords = m;
+        }
 
+        public void UpdateCursor(UserControl target)
+        {
             switch (point_mode)
             {
                 case active_zone.RESIZE_ZONE:
-                    this.Cursor = Cursors.PanEast;
+                    target.Cursor = Cursors.PanEast;
                     break;
                 default:
-                    this.Cursor = Cursors.Arrow;
+                    target.Cursor = Cursors.Arrow;
                     break;
             }
-
-            Rectangle rect = new Rectangle((int)m.x, (int)m.y, 1, 1);
-            g.DrawRectangle(current_pen, rect);
-
-            if (hovered == hover)
-                return;
-
-            hovered = hover;
-            this.Refresh();
         }
+    }
+
+    public partial class Gantt
+    {
+        mouse_state mouse_enter_state, mouse_current_state;
+
+        private void MouseMove(Point2d m)
+        {
+            var mouse_prev_state = mouse_current_state;
+            mouse_current_state = new mouse_state(m);
+
+            mouse_current_state.hovered = RayTrace(m);
+            mouse_current_state.UpdateCursor(this);
+
+            if (mouse_current_state.hovered != mouse_prev_state.hovered)
+                this.Invalidate();
+
+            mouse_current_state = mouse_current_state;
+        }
+
+       // private void MouseClick()
 
         private int RayTrace(Point2d m)
         {
             var line = YCoordinateToPos((int)m.y);
-
-            point_mode = active_zone.NONE;
 
             if (tasks.Count() <= line)
                 return -1;
@@ -63,9 +77,9 @@ namespace TestGantt
                 return -1;
 
             if (end_coord - m.x < 5)
-                point_mode = active_zone.RESIZE_ZONE;
+                mouse_current_state.point_mode = active_zone.RESIZE_ZONE;
             else
-                point_mode = active_zone.MOVE_ZONE;
+                mouse_current_state.point_mode = active_zone.MOVE_ZONE;
 
             return line;
         }

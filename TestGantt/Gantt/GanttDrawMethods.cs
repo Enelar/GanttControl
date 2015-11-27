@@ -13,9 +13,10 @@ namespace TestGantt
 {
     public partial class Gantt
     {
+        private Graphics g;
+
         private Pen current_pen;
         private Brush current_brush;
-        private Graphics g;
 
         public int HBox = 10;
         public int HRow = 10 + 4 * 2;
@@ -24,8 +25,11 @@ namespace TestGantt
 
         private void InitDrawGantt()
         {
+            Resize();
+
             current_pen = new Pen(Color.Black);
             current_brush = new SolidBrush(Color.Blue);
+            mouse_current_state = new mouse_state(new Point2d(0, 0));
 
             tasks = new List<TimeInterval>();
             positions = new Dictionary<int, int>();
@@ -41,6 +45,33 @@ namespace TestGantt
             UpdateLink(0, 11, true);
             UpdateLink(0, 22, true);
             UpdateLink(33, 22, true);
+        }
+
+        private void Draw()
+        {
+            var hours_in_window = (draw_interval.end - draw_interval.start).TotalHours;
+            if (hours_in_window < 1)
+                return;
+
+            hour_to_pixel_ratio = 1.0 * this.Width / hours_in_window;
+
+            BufferedGraphicsContext buffered_graphics_context = new BufferedGraphicsContext();
+            BufferedGraphics second_graphic_buffer = buffered_graphics_context.Allocate(this.CreateGraphics(), this.DisplayRectangle);
+
+            g = second_graphic_buffer.Graphics;
+
+            g.Clear(this.BackColor);
+
+            DrawTasks();
+            DrawLinks();
+
+            second_graphic_buffer.Render();
+            second_graphic_buffer.Dispose();
+            buffered_graphics_context.Dispose();
+        }
+
+        private void Resize()
+        {
         }
 
         private int DateTimeToXCoordinate(DateTime time_point)
@@ -74,7 +105,7 @@ namespace TestGantt
 
             var MicrosoftProjectRectColour = Color.FromArgb(255, 138, 187, 237);
 
-            if (hovered == row)
+            if (mouse_current_state.hovered == row)
                 MicrosoftProjectRectColour = Color.FromArgb(255, 96, 163, 230);
 
             var brush = new SolidBrush(MicrosoftProjectRectColour);
