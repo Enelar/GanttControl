@@ -84,10 +84,14 @@ namespace TestGantt
                 return;
 
             var line = RayTrace(mouse_enter_state.coords);
-            var origin_end = tasks[line].end;
+            var origin_start = tasks[line].start;
             var new_end = XCoordinateToDateTime((int)mouse_current_state.coords.x);
 
-            DrawRect(line, new TimeInterval(origin_end, new_end));
+            if (new_end < origin_start)
+                new_end = origin_start;
+
+            g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
+            DrawRect(line, new TimeInterval(origin_start, new_end));
         }
 
         private void MouseAction()
