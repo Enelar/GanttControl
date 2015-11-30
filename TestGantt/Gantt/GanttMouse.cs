@@ -51,7 +51,9 @@ namespace TestGantt
             mouse_current_state = new mouse_state(m);
 
             mouse_current_state.hovered = RayTrace(m);
-            mouse_current_state.UpdateCursor(this);
+
+            if (mouse_enter_state == null)
+                mouse_current_state.UpdateCursor(this);
 
             if (mouse_current_state.hovered != mouse_prev_state.hovered)
                 this.Invalidate();
