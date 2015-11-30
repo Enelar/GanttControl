@@ -85,6 +85,12 @@ namespace TestGantt
             if (mouse_enter_state.point_mode == active_zone.NONE)
                 return;
 
+            if (mouse_enter_state.point_mode == active_zone.RESIZE_ZONE)
+                ResizeAnimation();
+        }
+
+        private void ResizeAnimation()
+        {
             var line = RayTrace(mouse_enter_state.coords);
             var origin_start = tasks[line].start;
             var new_end = XCoordinateToDateTime((int)mouse_current_state.coords.x);
