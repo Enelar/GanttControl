@@ -90,6 +90,9 @@ namespace TestGantt
 
             if (mouse_enter_state.point_mode == active_zone.RESIZE_ZONE)
                 ResizeAnimation();
+
+            if (mouse_enter_state.point_mode == active_zone.MOVE_ZONE)
+                MoveAnimation();
         }
 
         private void ResizeAnimation()
@@ -103,6 +106,30 @@ namespace TestGantt
 
             g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
             DrawRect(line, new TimeInterval(origin_start, new_end));
+        }
+
+        private void MoveAnimation()
+        {
+            var line = RayTrace(mouse_enter_state.coords);
+
+            var drift = (mouse_current_state.coords.x - mouse_enter_state.coords.x) / hour_to_pixel_ratio;
+
+            var task = tasks[line];
+
+            var new_interval = new TimeInterval();
+
+            try
+            {
+                new_interval.start = task.start.AddHours(drift);
+                new_interval.end = task.end.AddHours(drift);
+            } catch (System.ArgumentOutOfRangeException)
+            {
+                g.FillRectangle(new SolidBrush(Color.Red), 0, PosToYCoordinate(line), Width, HRow);
+                return;
+            }
+
+            g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
+            DrawRect(line, new TimeInterval(task.start.AddHours(drift), task.end.AddHours(drift)));
         }
 
         private void MouseAction()
