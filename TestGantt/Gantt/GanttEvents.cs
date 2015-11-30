@@ -45,11 +45,13 @@ namespace TestGantt
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
+            OnMouseHold();
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
+            OnMouseUnhold();
         }
 
         protected override void OnMouseDoubleClick(MouseEventArgs e)

@@ -12,6 +12,7 @@ namespace TestGantt
     {
         NONE,
         MOVE_ZONE,
+        LINK_ZONE,
         RESIZE_ZONE,
     };
 
@@ -55,10 +56,38 @@ namespace TestGantt
             if (mouse_current_state.hovered != mouse_prev_state.hovered)
                 this.Invalidate();
 
-            mouse_current_state = mouse_current_state;
+            if (mouse_enter_state != null)
+                EnterStateAction();
         }
 
-       // private void MouseClick()
+        private void OnMouseHold()
+        {
+            mouse_enter_state = mouse_current_state;
+        }
+
+        private void OnMouseUnhold()
+        {
+            if (mouse_enter_state == null)
+                return;
+
+            MouseAction();
+
+            mouse_enter_state = null;
+        }
+
+        private void EnterStateAction()
+        {
+            if (mouse_enter_state.point_mode == active_zone.NONE)
+                return;
+
+
+        }
+
+        private void MouseAction()
+        {
+            if (mouse_enter_state.point_mode == active_zone.NONE)
+                return;
+        }
 
         private int RayTrace(Point2d m)
         {
