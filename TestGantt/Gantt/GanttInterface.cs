@@ -82,5 +82,15 @@ namespace TestGantt
                 DrawArrow(row1, task1.end, row2, task2.start);
             }
         }
+
+        protected void OnMoveComplete(int uid, DateTime new_start_date)
+        {
+
+        }
+
+        protected void OnResizeComplete(int uid, DateTime new_end_date)
+        {
+
+        }
     }
 }
