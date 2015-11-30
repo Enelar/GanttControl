@@ -102,7 +102,7 @@ namespace TestGantt
             return new Tuple<int, TimeInterval>(line, tasks[line]);
         }
 
-        private void ResizeAnimation()
+        private int Resize(out TimeInterval resized)
         {
             var active = MouseActiveTask();
             var origin_start = active.Item2.start;
@@ -111,30 +111,63 @@ namespace TestGantt
             if (new_end < origin_start)
                 new_end = origin_start;
 
-            g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(active.Item1), Width, HRow);
-            DrawRect(active.Item1, new TimeInterval(origin_start, new_end));
+            resized = new TimeInterval(origin_start, new_end);
+
+            return active.Item1;
+        }
+
+        private int Move(out TimeInterval moved)
+        {
+            var drift = (mouse_current_state.coords.x - mouse_enter_state.coords.x) / hour_to_pixel_ratio;
+            var active_task = MouseActiveTask();
+            moved = new TimeInterval();
+
+            moved.start = active_task.Item2.start;
+            moved.end = active_task.Item2.end;
+
+            try
+            {
+                moved.start = active_task.Item2.start.AddHours(drift); 
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                if (drift < 0)
+                    moved.start = DateTime.MinValue;
+                else
+                    moved.start = DateTime.MaxValue;
+            }
+
+            try
+            {
+                moved.end = active_task.Item2.end.AddHours(drift);
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                if (drift < 0)
+                    moved.end = DateTime.MinValue;
+                else
+                    moved.end = DateTime.MaxValue;
+            }
+
+            return active_task.Item1;
+        }
+
+        private void ResizeAnimation()
+        {
+            TimeInterval updated;
+            var line = Resize(out updated);
+
+            g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
+            DrawRect(line, updated);
         }
 
         private void MoveAnimation()
         {
-            var drift = (mouse_current_state.coords.x - mouse_enter_state.coords.x) / hour_to_pixel_ratio;
+            TimeInterval updated;
+            var line = Move(out updated);
 
-            var active = MouseActiveTask();
-
-            var new_interval = new TimeInterval();
-
-            try
-            {
-                new_interval.start = active.Item2.start.AddHours(drift);
-                new_interval.end = active.Item2.end.AddHours(drift);
-            } catch (System.ArgumentOutOfRangeException)
-            {
-                g.FillRectangle(new SolidBrush(Color.Red), 0, PosToYCoordinate(active.Item1), Width, HRow);
-                return;
-            }
-
-            g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(active.Item1), Width, HRow);
-            DrawRect(active.Item1, new TimeInterval(active.Item2.start.AddHours(drift), active.Item2.end.AddHours(drift)));
+            g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
+            DrawRect(line, updated);
         }
 
         private void MouseAction()
