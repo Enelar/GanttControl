@@ -57,7 +57,7 @@ namespace TestGantt
                 this.Invalidate();
 
             if (mouse_enter_state != null)
-                EnterStateAction();
+                this.Invalidate();
         }
 
         private void OnMouseHold()
@@ -75,18 +75,27 @@ namespace TestGantt
             mouse_enter_state = null;
         }
 
-        private void EnterStateAction()
+        private void EnterStateAnimation()
         {
+            if (mouse_enter_state == null)
+                return;
+
             if (mouse_enter_state.point_mode == active_zone.NONE)
                 return;
 
+            var line = RayTrace(mouse_enter_state.coords);
+            var origin_end = tasks[line].end;
+            var new_end = XCoordinateToDateTime((int)mouse_current_state.coords.x);
 
+            DrawRect(line, new TimeInterval(origin_end, new_end));
         }
 
         private void MouseAction()
         {
             if (mouse_enter_state.point_mode == active_zone.NONE)
                 return;
+
+            this.Invalidate();
         }
 
         private int RayTrace(Point2d m)

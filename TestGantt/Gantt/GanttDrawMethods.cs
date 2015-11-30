@@ -63,6 +63,7 @@ namespace TestGantt
             g.Clear(this.BackColor);
 
             DrawTasks();
+            EnterStateAnimation();
             DrawLinks();
 
             second_graphic_buffer.Render();
@@ -78,6 +79,12 @@ namespace TestGantt
         {
             var diff = (time_point - draw_interval.start).TotalHours;
             return (int)(diff * hour_to_pixel_ratio);
+        }
+
+        private DateTime XCoordinateToDateTime(int x)
+        {
+            var hours = x / hour_to_pixel_ratio;
+            return draw_interval.start.AddHours(hours);
         }
 
         private int PosToYCoordinate(int pos)
