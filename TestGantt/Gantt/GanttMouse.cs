@@ -65,6 +65,9 @@ namespace TestGantt
         private void OnMouseHold()
         {
             mouse_enter_state = mouse_current_state;
+
+            if (mouse_enter_state.point_mode == active_zone.MOVE_ZONE)
+                Cursor = Cursors.NoMoveHoriz;
         }
 
         private void OnMouseUnhold()
