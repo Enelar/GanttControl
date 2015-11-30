@@ -25,8 +25,6 @@ namespace TestGantt
 
         private void InitDrawGantt()
         {
-            Resize();
-
             current_pen = new Pen(Color.Black);
             current_brush = new SolidBrush(Color.Blue);
             mouse_current_state = new mouse_state(new Point2d(0, 0));

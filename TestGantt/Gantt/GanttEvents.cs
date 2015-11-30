@@ -16,6 +16,7 @@ namespace TestGantt
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
+            InitDrawGantt();
         }
 
         protected override void OnPaint(PaintEventArgs e) 
@@ -28,10 +29,7 @@ namespace TestGantt
         {
             base.OnResize(e);
 
-            if (g == null)
-                InitDrawGantt();
-            else
-                Resize();
+            Resize();
 
             this.Invalidate();
         }
