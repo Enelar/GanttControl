@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gantt\active_zone.cs" />
     <Compile Include="Gantt\Adapter.cs" />
     <Compile Include="Gantt\GanttCreatedBySystem.cs">
       <SubType>UserControl</SubType>
@@ -69,6 +70,7 @@
     <Compile Include="Gantt\GanttMouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Gantt\mouse_state.cs" />
     <Compile Include="Gantt\Point2d.cs" />
     <Compile Include="Gantt\RealBicycle.cs">
       <SubType>UserControl</SubType>

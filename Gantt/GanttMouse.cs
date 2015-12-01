@@ -13,39 +13,6 @@ namespace CrmExpert.ExpressApp.GanttView
     using HashT = Int32;
     using LineT = Int32;
 
-    enum active_zone
-    {
-        NONE,
-        MOVE_ZONE,
-        LINK_ZONE,
-        RESIZE_ZONE,
-    };
-
-    class mouse_state
-    {
-        public active_zone point_mode = active_zone.NONE;
-        public int hovered = -1;
-        public Point2d coords;
-
-        public mouse_state(Point2d m)
-        {
-            coords = m;
-        }
-
-        public void UpdateCursor(UserControl target)
-        {
-            switch (point_mode)
-            {
-                case active_zone.RESIZE_ZONE:
-                    target.Cursor = Cursors.PanEast;
-                    break;
-                default:
-                    target.Cursor = Cursors.Arrow;
-                    break;
-            }
-        }
-    }
-
     public partial class Bicycle
     {
         mouse_state mouse_enter_state, mouse_current_state;
