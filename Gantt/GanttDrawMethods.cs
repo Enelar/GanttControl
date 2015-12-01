@@ -11,6 +11,11 @@ using System.Drawing.Drawing2D;
 
 namespace CrmExpert.ExpressApp.GanttView
 {
+    using TaskT = TimeInterval;
+    using UIDT = Int32;
+    using HashT = Int32;
+    using LineT = Int32;
+
     public partial class Bicycle
     {
         private Graphics g;
@@ -29,9 +34,9 @@ namespace CrmExpert.ExpressApp.GanttView
             current_brush = new SolidBrush(Color.Blue);
             mouse_current_state = new mouse_state(new Point2d(0, 0));
 
-            tasks = new BindingList<TimeInterval>();
-            positions = new Dictionary<int, int>();
-            links = new Dictionary<int, Tuple<int, int>>();
+            tasks = new BindingList<TaskT>();
+            positions = new Dictionary<UIDT, LineT>();
+            links = new Dictionary<HashT, Tuple<UIDT, UIDT>>();
 
             BindToCollections();
 
@@ -87,19 +92,19 @@ namespace CrmExpert.ExpressApp.GanttView
             return draw_interval.start.AddHours(hours);
         }
 
-        private int PosToYCoordinate(int pos)
+        private int PosToYCoordinate(LineT pos)
         {
             var row_baseline = pos * HRow;
             var centered_offset = (HRow - HBox) / 2;
             return row_baseline + centered_offset;
         }
 
-        private int YCoordinateToPos(int y)
+        private LineT YCoordinateToPos(int y)
         {
             return y / HRow;
         }
 
-        private void DrawRect(int row, TimeInterval interval)
+        private void DrawRect(LineT row, TaskT interval)
         {
             var task_draw_interval = interval;
 
@@ -119,7 +124,7 @@ namespace CrmExpert.ExpressApp.GanttView
             g.FillRectangle(brush, rect);
         }
 
-        private void DrawArrow(int row_frow, DateTime date_time_from, int row_to, DateTime date_time_to)
+        private void DrawArrow(LineT row_frow, DateTime date_time_from, LineT row_to, DateTime date_time_to)
         {
             var y1 = PosToYCoordinate(row_frow) + HBox / 2;
             var y2 = PosToYCoordinate(row_to) - 1;

@@ -8,6 +8,11 @@ using System.Windows.Forms;
 
 namespace CrmExpert.ExpressApp.GanttView
 {
+    using TaskT = TimeInterval;
+    using UIDT = Int32;
+    using HashT = Int32;
+    using LineT = Int32;
+
     enum active_zone
     {
         NONE,
@@ -95,14 +100,14 @@ namespace CrmExpert.ExpressApp.GanttView
                 MoveAnimation();
         }
 
-        private Tuple<int, TimeInterval> MouseActiveTask()
+        private Tuple<LineT, TaskT> MouseActiveTask()
         {
             var line = RayTrace(mouse_enter_state.coords);
 
-            return new Tuple<int, TimeInterval>(line, tasks[line]);
+            return new Tuple<LineT, TaskT>(line, tasks[line]);
         }
 
-        private int Resize(out TimeInterval resized)
+        private LineT Resize(out TaskT resized)
         {
             var active = MouseActiveTask();
             var origin_start = active.Item2.start;
@@ -111,16 +116,16 @@ namespace CrmExpert.ExpressApp.GanttView
             if (new_end < origin_start)
                 new_end = origin_start;
 
-            resized = new TimeInterval(origin_start, new_end);
+            resized = new TaskT(origin_start, new_end);
 
             return active.Item1;
         }
 
-        private int Move(out TimeInterval moved)
+        private LineT Move(out TaskT moved)
         {
             var drift = (mouse_current_state.coords.x - mouse_enter_state.coords.x) / hour_to_pixel_ratio;
             var active_task = MouseActiveTask();
-            moved = new TimeInterval();
+            moved = new TaskT();
 
             moved.start = active_task.Item2.start;
             moved.end = active_task.Item2.end;
@@ -154,7 +159,7 @@ namespace CrmExpert.ExpressApp.GanttView
 
         private void ResizeAnimation()
         {
-            TimeInterval updated;
+            TaskT updated;
             var line = Resize(out updated);
 
             g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
@@ -163,7 +168,7 @@ namespace CrmExpert.ExpressApp.GanttView
 
         private void MoveAnimation()
         {
-            TimeInterval updated;
+            TaskT updated;
             var line = Move(out updated);
 
             g.FillRectangle(new SolidBrush(BackColor), 0, PosToYCoordinate(line), Width, HRow);
@@ -175,7 +180,7 @@ namespace CrmExpert.ExpressApp.GanttView
             if (mouse_enter_state.point_mode == active_zone.NONE)
                 return;
 
-            TimeInterval update;
+            TaskT update;
 
             if (mouse_enter_state.point_mode == active_zone.RESIZE_ZONE)
             {
@@ -194,7 +199,7 @@ namespace CrmExpert.ExpressApp.GanttView
             this.Invalidate();
         }
 
-        private int RayTrace(Point2d m)
+        private LineT RayTrace(Point2d m)
         {
             var line = YCoordinateToPos((int)m.y);
 

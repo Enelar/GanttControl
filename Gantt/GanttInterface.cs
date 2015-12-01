@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace CrmExpert.ExpressApp.GanttView
 {
+    using TaskT = TimeInterval;
+    using UIDT = Int32;
+    using HashT = Int32;
+    using LineT = Int32;
+
     public struct task
     {
         public TimeInterval interval;
@@ -15,9 +20,9 @@ namespace CrmExpert.ExpressApp.GanttView
 
     public partial class Bicycle
     {
-        private BindingList<TimeInterval> tasks;
-        private Dictionary<int, Tuple<int, int>> links;
-        private Dictionary<int, int> positions;
+        private BindingList<TaskT> tasks;
+        private Dictionary<HashT, Tuple<UIDT, UIDT>> links;
+        private Dictionary<UIDT, LineT> positions;
         private Adapter tasks_adapter;
 
         public void BindToCollections()
@@ -25,25 +30,25 @@ namespace CrmExpert.ExpressApp.GanttView
             tasks_adapter = new Adapter(tasks, positions);
         }
 
-        public void UpdateTask(int uid, int pos, DateTime begin, DateTime end)
+        public void UpdateTask(UIDT uid, LineT pos, DateTime begin, DateTime end)
         {
             if (tasks.Count() < pos)
                 throw new Exception("Please add tasks to gantt continiously");
             if (tasks.Count() == pos)
-                tasks.Add(new TimeInterval());
+                tasks.Add(new TaskT());
 
-            tasks[pos] = new TimeInterval(begin, end);
+            tasks[pos] = new TaskT(begin, end);
            
             positions[uid] = pos;
         }
 
-        public void UpdateLink( int uid1, int uid2, bool active )
+        public void UpdateLink( UIDT uid1, UIDT uid2, bool active )
         {
             var hash = (uid1.ToString() + "delimeter" +  uid2.ToString()).GetHashCode();
 
             if (active)
             {
-                links[hash] = new Tuple<int, int>(uid1, uid2);
+                links[hash] = new Tuple<UIDT, UIDT>(uid1, uid2);
                 return;
             }
 
@@ -52,7 +57,7 @@ namespace CrmExpert.ExpressApp.GanttView
 
         public void SetDrawInterval(DateTime begin, DateTime end)
         {
-            draw_interval = new TimeInterval(begin, end);
+            draw_interval = new TaskT(begin, end);
         }
 
         private void DrawTasks()
@@ -69,7 +74,7 @@ namespace CrmExpert.ExpressApp.GanttView
 
         private void DrawLinks()
         {
-            var to_remove = new List<int>();
+            var to_remove = new List<HashT>();
 
             foreach (var tuple in links)
             {
@@ -91,17 +96,17 @@ namespace CrmExpert.ExpressApp.GanttView
             }
         }
 
-        private int UIDToPos(int uid)
+        private int UIDToPos(UIDT uid)
         {
             return positions[uid];
         }
 
-        private int PosToUID(int pos)
+        private int PosToUID(UIDT pos)
         {
             return positions.First(entry => entry.Value == pos).Key;
         }
 
-        protected void OnMoveComplete(int uid, DateTime new_start_date)
+        protected void OnMoveComplete(UIDT uid, DateTime new_start_date)
         {
             int pos = positions[uid];
             var task = tasks[pos];
@@ -113,7 +118,7 @@ namespace CrmExpert.ExpressApp.GanttView
             tasks[pos] = task;
         }
 
-        protected void OnResizeComplete(int uid, DateTime new_end_date)
+        protected void OnResizeComplete(UIDT uid, DateTime new_end_date)
         {
             var task = tasks_adapter.BicycleTask(uid);
             task.end = new_end_date;

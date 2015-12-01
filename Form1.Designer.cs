@@ -29,7 +29,7 @@ namespace TestGantt
         /// </summary>
         private void InitializeComponent()
         {
-            this.gantt1 = new Bicycle();
+            this.gantt1 = new RealBicycle();
             this.SuspendLayout();
             // 
             // gantt1
@@ -57,7 +57,7 @@ namespace TestGantt
 
         #endregion
 
-        private Bicycle gantt1;
+        private RealBicycle gantt1;
 
 
     }
