@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestGantt
+namespace CrmExpert.ExpressApp.GanttView
 {
     class Vector4d
     {

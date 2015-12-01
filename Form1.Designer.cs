@@ -1,4 +1,5 @@
-﻿namespace TestGantt
+﻿using CrmExpert.ExpressApp.GanttView;
+namespace TestGantt
 {
     partial class Form1
     {
@@ -28,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gantt1 = new TestGantt.Gantt();
+            this.gantt1 = new Bicycle();
             this.SuspendLayout();
             // 
             // gantt1
@@ -56,7 +57,7 @@
 
         #endregion
 
-        private Gantt gantt1;
+        private Bicycle gantt1;
 
 
     }

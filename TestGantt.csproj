@@ -52,29 +52,28 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gantt\Adapter.cs" />
     <Compile Include="Gantt\GanttCreatedBySystem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gantt\GanttCreatedBySystem.Designer.cs">
-      <DependentUpon>GanttCreatedBySystem.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Gantt\GanttCreatedBySystem.Designer.cs" />
     <Compile Include="Gantt\GanttDrawMethods.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Gantt\GanttInterface.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Gantt\GanttEvents.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Gantt\GanttInterface.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Gantt\GanttMouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gantt\Utils\Point2d.cs" />
+    <Compile Include="Gantt\Point2d.cs" />
+    <Compile Include="Gantt\TimeInterval.cs" />
+    <Compile Include="Gantt\Vector4d.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Gantt\Utils\TimeInterval.cs" />
-    <Compile Include="Gantt\Utils\Vector4d.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

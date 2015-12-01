@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace TestGantt
+namespace CrmExpert.ExpressApp.GanttView
 {
-    public partial class Gantt
+    public partial class Bicycle
     {
         private Graphics g;
 
@@ -19,7 +19,7 @@ namespace TestGantt
         private Brush current_brush;
 
         public int HBox = 10;
-        public int HRow = 10 + 4 * 2;
+        public int HRow = 10 + 3 * 2;
         private TimeInterval draw_interval;
         double hour_to_pixel_ratio;
 
@@ -29,9 +29,11 @@ namespace TestGantt
             current_brush = new SolidBrush(Color.Blue);
             mouse_current_state = new mouse_state(new Point2d(0, 0));
 
-            tasks = new List<TimeInterval>();
+            tasks = new BindingList<TimeInterval>();
             positions = new Dictionary<int, int>();
             links = new Dictionary<int, Tuple<int, int>>();
+
+            BindToCollections();
 
             var zero = new DateTime();
             SetDrawInterval(zero.AddHours(0), zero.AddHours(10));

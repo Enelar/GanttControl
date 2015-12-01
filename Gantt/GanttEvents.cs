@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace TestGantt
+namespace CrmExpert.ExpressApp.GanttView
 {
-    public partial class Gantt
+    public partial class Bicycle
     {
         protected override void OnCreateControl()
         {

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Gantt
+namespace CrmExpert.ExpressApp.GanttView
 {
-    public partial class UserControl1: UserControl
+    public partial class Bicycle : UserControl
     {
-        public UserControl1()
+        public Bicycle()
         {
             InitializeComponent();
         }

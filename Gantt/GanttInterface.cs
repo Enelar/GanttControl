@@ -1,21 +1,29 @@
-﻿using System;
+﻿using CrmExpert.ExpressApp.GanttView.Gantt.Bind;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestGantt
+namespace CrmExpert.ExpressApp.GanttView
 {
     public struct task
     {
         public TimeInterval interval;
     };
 
-    public partial class Gantt
+    public partial class Bicycle
     {
-        private List<TimeInterval> tasks;
+        private BindingList<TimeInterval> tasks;
         private Dictionary<int, Tuple<int, int>> links;
         private Dictionary<int, int> positions;
+        private Adapter tasks_adapter;
+
+        public void BindToCollections()
+        {
+            tasks_adapter = new Adapter(tasks, positions);
+        }
 
         public void UpdateTask(int uid, int pos, DateTime begin, DateTime end)
         {
@@ -83,14 +91,32 @@ namespace TestGantt
             }
         }
 
+        private int UIDToPos(int uid)
+        {
+            return positions[uid];
+        }
+
+        private int PosToUID(int pos)
+        {
+            return positions.First(entry => entry.Value == pos).Key;
+        }
+
         protected void OnMoveComplete(int uid, DateTime new_start_date)
         {
+            int pos = positions[uid];
+            var task = tasks[pos];
+            
+            var diff = task.end - task.start;
+            task.start = new_start_date;
+            task.end = task.start + diff;
 
+            tasks[pos] = task;
         }
 
         protected void OnResizeComplete(int uid, DateTime new_end_date)
         {
-
+            var task = tasks_adapter.BicycleTask(uid);
+            task.end = new_end_date;
         }
     }
 }

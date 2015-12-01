@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TestGantt
+namespace CrmExpert.ExpressApp.GanttView
 {
     enum active_zone
     {
@@ -41,7 +41,7 @@ namespace TestGantt
         }
     }
 
-    public partial class Gantt
+    public partial class Bicycle
     {
         mouse_state mouse_enter_state, mouse_current_state;
 
@@ -175,9 +175,20 @@ namespace TestGantt
             if (mouse_enter_state.point_mode == active_zone.NONE)
                 return;
 
+            TimeInterval update;
+
             if (mouse_enter_state.point_mode == active_zone.RESIZE_ZONE)
             {
+                var line = Resize(out update);
+                var uid = PosToUID(line);
+                OnResizeComplete(uid, update.end);
+            }
 
+            if (mouse_enter_state.point_mode == active_zone.MOVE_ZONE)
+            {
+                var line = Move(out update);
+                var uid = PosToUID(line);
+                OnMoveComplete(uid, update.start);
             }
 
             this.Invalidate();
