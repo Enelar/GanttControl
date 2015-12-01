@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 
 namespace CrmExpert.ExpressApp.GanttView
 {
-    using TaskT = TimeInterval;
+    /* Do same changes to each file */
+    using TaskT = task;
     using UIDT = String;
     using HashT = Int32;
     using LineT = Int32;
-
-    public struct task
-    {
-        public TimeInterval interval;
-    };
 
     public partial class Bicycle
     {
@@ -55,7 +51,7 @@ namespace CrmExpert.ExpressApp.GanttView
 
         public void SetDrawInterval(DateTime begin, DateTime end)
         {
-            draw_interval = new TaskT(begin, end);
+            draw_interval = new TimeInterval(begin, end);
         }
 
         private void DrawTasks()

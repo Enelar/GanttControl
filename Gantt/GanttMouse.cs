@@ -8,7 +8,8 @@ using System.Windows.Forms;
 
 namespace CrmExpert.ExpressApp.GanttView
 {
-    using TaskT = TimeInterval;
+    /* Do same changes to each file */
+    using TaskT = task;
     using UIDT = String;
     using HashT = Int32;
     using LineT = Int32;

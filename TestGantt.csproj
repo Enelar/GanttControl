@@ -75,6 +75,7 @@
     <Compile Include="Gantt\RealBicycle.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Gantt\task.cs" />
     <Compile Include="Gantt\TimeInterval.cs" />
     <Compile Include="Gantt\Vector4d.cs" />
     <Compile Include="Program.cs" />
