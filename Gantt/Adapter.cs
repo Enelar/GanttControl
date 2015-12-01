@@ -42,12 +42,12 @@ namespace CrmExpert.ExpressApp.GanttView.Gantt.Bind
 
         void SyncFromBicycleToOrigin(object sender, ListChangedEventArgs e)
         {
-            MessageBox.Show(e.ListChangedType.ToString());
+            //MessageBox.Show(e.ListChangedType.ToString());
         }
 
         void SyncFromOriginToBicycle(object sender, ListChangedEventArgs e)
         {
-            MessageBox.Show(e.ListChangedType.ToString());
+            //MessageBox.Show(e.ListChangedType.ToString());
         }
     }
 }
