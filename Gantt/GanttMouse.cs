@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace CrmExpert.ExpressApp.GanttView
 {
     using TaskT = TimeInterval;
-    using UIDT = Int32;
+    using UIDT = String;
     using HashT = Int32;
     using LineT = Int32;
 

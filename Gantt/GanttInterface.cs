@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace CrmExpert.ExpressApp.GanttView
 {
     using TaskT = TimeInterval;
-    using UIDT = Int32;
+    using UIDT = String;
     using HashT = Int32;
     using LineT = Int32;
 
@@ -23,11 +23,9 @@ namespace CrmExpert.ExpressApp.GanttView
         private BindingList<TaskT> tasks;
         private Dictionary<HashT, Tuple<UIDT, UIDT>> links;
         private Dictionary<UIDT, LineT> positions;
-        private Adapter tasks_adapter;
 
         public void BindToCollections()
         {
-            tasks_adapter = new Adapter(tasks, positions);
         }
 
         public void UpdateTask(UIDT uid, LineT pos, DateTime begin, DateTime end)
@@ -101,27 +99,17 @@ namespace CrmExpert.ExpressApp.GanttView
             return positions[uid];
         }
 
-        private int PosToUID(UIDT pos)
+        private UIDT PosToUID(LineT pos)
         {
             return positions.First(entry => entry.Value == pos).Key;
         }
 
         protected void OnMoveComplete(UIDT uid, DateTime new_start_date)
         {
-            int pos = positions[uid];
-            var task = tasks[pos];
-            
-            var diff = task.end - task.start;
-            task.start = new_start_date;
-            task.end = task.start + diff;
-
-            tasks[pos] = task;
         }
 
         protected void OnResizeComplete(UIDT uid, DateTime new_end_date)
         {
-            var task = tasks_adapter.BicycleTask(uid);
-            task.end = new_end_date;
         }
     }
 }

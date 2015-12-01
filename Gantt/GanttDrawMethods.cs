@@ -12,7 +12,7 @@ using System.Drawing.Drawing2D;
 namespace CrmExpert.ExpressApp.GanttView
 {
     using TaskT = TimeInterval;
-    using UIDT = Int32;
+    using UIDT = String;
     using HashT = Int32;
     using LineT = Int32;
 
@@ -42,14 +42,14 @@ namespace CrmExpert.ExpressApp.GanttView
 
             var zero = new DateTime();
             SetDrawInterval(zero.AddHours(0), zero.AddHours(10));
-            UpdateTask(0, 0, zero.AddHours(1), zero.AddHours(2));
-            UpdateTask(11, 1, zero.AddHours(3), zero.AddHours(4));
-            UpdateTask(22, 2, zero.AddHours(5), zero.AddHours(8));
-            UpdateTask(33, 3, zero.AddHours(0), zero.AddHours(2));
+            UpdateTask("0", 0, zero.AddHours(1), zero.AddHours(2));
+            UpdateTask("11", 1, zero.AddHours(3), zero.AddHours(4));
+            UpdateTask("22", 2, zero.AddHours(5), zero.AddHours(8));
+            UpdateTask("33", 3, zero.AddHours(0), zero.AddHours(2));
 
-            UpdateLink(0, 11, true);
-            UpdateLink(0, 22, true);
-            UpdateLink(33, 22, true);
+            UpdateLink("0", "11", true);
+            UpdateLink("0", "22", true);
+            UpdateLink("33", "22", true);
         }
 
         private void Draw()
